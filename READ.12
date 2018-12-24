@@ -1,0 +1,58 @@
+San Francisco Canyon Comapny
+220 Montgomery Street, Suite 1063
+San Francisco, CA 94104
+
+(415) 398-9957  -  FAX 398-5998
+
+Compuserve 72371,104
+
+Mark Florence, President
+
+
+
+MDI-12.ARC
+----------
+These enhancements are included in MDI-12.ARC:
+
+1. Document windows can now be defined as having an action bar (menu).
+   To do this, simply code the id of a menu resource in the MDICreateDocument
+   function call as the sixth parameter and define that menu resource
+   in the appropriate .RC file.
+
+   Naturally, the action bar is not displayed
+   in the document frame window. Instead, the MDI code automatically
+   inserts the document action bar items into the desktop action bar when
+   the document window becomes active. The effect is that of different
+   document types offering different menu choices to the user, much like
+   EXCEL.
+
+2. The above feature makes it convenient for different document types
+   to have their own menu commands. However, it was previously difficult
+   to process WM_COMMAND messages from the action bar in the document
+   window procedure, because they were sent to the desktop window procedure.
+
+   MDIDesktopWndProc now routes all WM_COMMAND messages it doesn't recognize
+   to the active document's window procedure. This way, a document window
+   procedure can be written normally to process its WM_COMMAND messages,
+   just as if it were receiving them directly.
+
+3. For similar reasons, MDIDesktopWndProc has been changed to route all
+   WM_INITMENU and WM_MENUEND messages to the active document's window
+   procedure. The document can then enable and disable, check and uncheck
+   menu items as it sees fit to reflect its current state.
+
+   NOTE: for now, don't try to MM_INSERT*, MM_DELETE* or MM_REMOVE*
+   any menu items. A future release will support this (and keep all
+   action bars in sync) as well as allow the changing of menu items
+   arbitrarily, rather than just at WM_INITMENU time.
+
+4. The MDI_LOCATE_* message support has been improved. These messages
+   can now be sent both to the desktop and document window handles.
+   The MDI code figures out what to do. For example, MDI_LOCATE_INSTANCE_DATA
+   sent to the desktop returns the instance data of the active document.
+   See MDI.H for specifics.
+
+The TEST.C and TEST.RC source have been updated to illustrate the
+features described above. Many thanks to the folks at DB Software in
+Palo Alto for their suggestions and help.
+

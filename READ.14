@@ -1,0 +1,41 @@
+San Francisco Canyon Comapny
+220 Montgomery Street, Suite 1063
+San Francisco, CA 94104
+
+(415) 398-9957  -  FAX 398-5998
+
+Compuserve 72371,104
+
+Mark Florence, President
+
+
+
+MDI-14.ARC
+----------
+MDI-14.ARC contains these enhancements:
+
+1. MDI now issues an MDI_REQUEST_EXTENDED_OPTIONS WM_CONTROL message
+   during desktop creation.
+
+2. MDI now issues an MDI_NOTIFY_CASCADE_INSTANCE WM_CONTROL message
+   during a cascade operation and MDI_NOTIFY_TILE_INSTANCE message
+   during a tile operation.
+
+3. MDI now issues an MDI_NOTIFY_ACTIVATE_INSTANCE WM_CONTROL message
+   during document instance activation and MDI_NOTIFY_DEACTIVATE_INSTANCE
+   message during document instance deactivation.
+
+4. When the desktop is closed, MDI first issues an
+   MDI_INHIBIT_CLOSE_DESKTOP message to the desktop. If the desktop
+   allows the close, MDI now polls all open documents and
+   issues an MDI_INHIBIT_CLOSE_INSTANCE message. Only if all documents
+   do not inhibit the close is the desktop closed.
+
+5. MDI now supports the MDI_MSG_SET_DESKTOP_TITLE and
+   MDI_MSG_SET_INSTANCE_TITLE messages.
+
+MDI-14 fixes these bugs:
+
+1. A bug in which a document's system menu is repainted incorrectly
+   after a tile or cascade operation is fixed.
+

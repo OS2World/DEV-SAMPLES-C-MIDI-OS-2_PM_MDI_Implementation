@@ -1,0 +1,136 @@
+// Includes
+// --------
+   #define INCL_WIN
+
+   #include <os2.h>
+   #include "MDI.RH"
+
+
+// Desktop Accelerator Table
+// -------------------------
+   ACCELTABLE ACCEL_DESKTOP
+     {VK_ALT, CMD_DESKTOP_APPMENU,   VIRTUALKEY, LONEKEY
+      VK_F1,  WM_HELP,               VIRTUALKEY, HELP
+      VK_F3,  SC_CLOSE,              VIRTUALKEY, SYSCOMMAND
+      VK_F4,  CMD_DESKTOP_CLOSE,     VIRTUALKEY, ALT
+      VK_F5,  CMD_DESKTOP_RESTORE,   VIRTUALKEY, ALT
+      VK_F7,  CMD_DESKTOP_MOVE,      VIRTUALKEY, ALT
+      VK_F8,  CMD_DESKTOP_SIZE,      VIRTUALKEY, ALT
+      VK_F9,  CMD_DESKTOP_MINIMIZE,  VIRTUALKEY, ALT
+      VK_F10, CMD_DESKTOP_APPMENU,   VIRTUALKEY
+      VK_F10, CMD_DESKTOP_MAXIMIZE,  VIRTUALKEY, ALT
+      " ",    CMD_DESKTOP_SYSMENU,   CHAR,       ALT
+      VK_F4,  CMD_DOCUMENT_CLOSE,    VIRTUALKEY, CONTROL
+      VK_F5,  CMD_DOCUMENT_RESTORE,  VIRTUALKEY, CONTROL
+      VK_F6,  CMD_DOCUMENT_NEXT,     VIRTUALKEY, CONTROL
+      "-",    CMD_DOCUMENT_SYSMENU,  CHAR,       ALT
+     }
+
+
+// Document Accelerator Table
+// --------------------------
+   ACCELTABLE ACCEL_DOCUMENT
+     {VK_ALT, CMD_DESKTOP_APPMENU,   VIRTUALKEY, LONEKEY
+      VK_F4,  CMD_DESKTOP_CLOSE,     VIRTUALKEY, ALT
+      VK_F5,  CMD_DESKTOP_RESTORE,   VIRTUALKEY, ALT
+      VK_F7,  CMD_DESKTOP_MOVE,      VIRTUALKEY, ALT
+      VK_F8,  CMD_DESKTOP_SIZE,      VIRTUALKEY, ALT
+      VK_F9,  CMD_DESKTOP_MINIMIZE,  VIRTUALKEY, ALT
+      VK_F10, CMD_DESKTOP_APPMENU,   VIRTUALKEY
+      VK_F10, CMD_DESKTOP_MAXIMIZE,  VIRTUALKEY, ALT
+      " ",    CMD_DESKTOP_SYSMENU,   CHAR,       ALT
+      VK_F4,  CMD_DOCUMENT_CLOSE,    VIRTUALKEY, CONTROL
+      VK_F5,  CMD_DOCUMENT_RESTORE,  VIRTUALKEY, CONTROL
+      VK_F6,  CMD_DOCUMENT_NEXT,     VIRTUALKEY, CONTROL
+      VK_F7,  CMD_DOCUMENT_MOVE,     VIRTUALKEY, CONTROL
+      VK_F8,  CMD_DOCUMENT_SIZE,     VIRTUALKEY, CONTROL
+      VK_F9,  CMD_DOCUMENT_MINIMIZE, VIRTUALKEY, CONTROL
+      VK_F10, CMD_DOCUMENT_MAXIMIZE, VIRTUALKEY, CONTROL
+      "-",    CMD_DOCUMENT_SYSMENU,  CHAR,       ALT
+     }
+
+
+// Window Menu
+// -----------
+   MENU MENU_WINDOW
+     {MENUITEM "Arrange ~Tiled",      CMD_ARRANGE_TILED
+      MENUITEM "Arrange ~Cascaded",   CMD_ARRANGE_CASCADED
+      MENUITEM SEPARATOR
+      MENUITEM "Tile Always",         CMD_TILE_ALWAYS
+      MENUITEM "Cascade Always",      CMD_CASCADE_ALWAYS
+      MENUITEM SEPARATOR
+      MENUITEM "~Hide",               CMD_HIDE,         MIS_TEXT, MIA_DISABLED
+      MENUITEM "~Unhide...",          CMD_UNHIDE,       MIS_TEXT, MIA_DISABLED
+      MENUITEM SEPARATOR
+      MENUITEM "~New Document",       CMD_NEW_DOCUMENT, MIS_TEXT, MIA_DISABLED
+     }
+
+// Child System Menu
+// -----------------
+   MENU MENU_CHILD_SYSMENU
+     {MENUITEM "~Restore\tCtrl+F5",   SC_RESTORE,       MIS_SYSCOMMAND
+      MENUITEM "Nex~t\tCtrl+F6",      SC_NEXT,          MIS_SYSCOMMAND
+      MENUITEM "~Move\tCtrl+F7",      SC_MOVE,          MIS_SYSCOMMAND
+      MENUITEM "~Size\tCtrl+F8",      SC_SIZE,          MIS_SYSCOMMAND
+      MENUITEM "Mi~nimize\tCtrl+F9",  SC_MINIMIZE,      MIS_SYSCOMMAND
+      MENUITEM "Ma~ximize\tCtrl+F10", SC_MAXIMIZE,      MIS_SYSCOMMAND
+      MENUITEM SEPARATOR
+      MENUITEM "~Close\tCtrl+F4",     SC_CLOSE,         MIS_SYSCOMMAND
+     }
+
+
+// Maximized Child System Menu
+// ---------------------------
+   MENU MENU_MAXCHILD_SYSMENU
+     {MENUITEM "~Restore\tCtrl+F5",   CMD_DOCUMENT_RESTORE
+      MENUITEM "Nex~t\tCtrl+F6",      CMD_DOCUMENT_NEXT
+      MENUITEM SEPARATOR
+      MENUITEM "~Close\tCtrl+F4",     CMD_DOCUMENT_CLOSE
+     }
+
+
+// Unhide Dialog Box
+// -----------------
+   DLGTEMPLATE DIALOG_UNHIDE LOADONCALL MOVEABLE DISCARDABLE
+     BEGIN
+       DIALOG "Unhide", DIALOG_UNHIDE, 50, 50, 207, 81, FS_NOBYTEALIGN | FS_DLGBORDER |
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_TITLEBAR
+         BEGIN
+           CONTROL "", DIALOG_UNHIDE_LISTBOX, 8, 8, 141, 67, WC_LISTBOX, LS_MULTIPLESEL |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+           CONTROL "OK", DID_OK, 158, 24, 38, 12, WC_BUTTON, BS_PUSHBUTTON |
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+           CONTROL "Cancel", DID_CANCEL, 158, 8, 38, 12, WC_BUTTON, BS_PUSHBUTTON |
+                WS_TABSTOP | WS_VISIBLE
+         END
+     END
+
+
+// More Documents Dialog Box
+// -------------------------
+   DLGTEMPLATE DIALOG_MORE LOADONCALL MOVEABLE DISCARDABLE
+     BEGIN
+       DIALOG "More Documents", DIALOG_MORE, 50, 50, 207, 81, FS_NOBYTEALIGN | FS_DLGBORDER |
+                WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS, FCF_TITLEBAR
+         BEGIN
+           CONTROL "", DIALOG_MORE_LISTBOX, 8, 8, 141, 67, WC_LISTBOX, LS_MULTIPLESEL |
+                WS_GROUP | WS_TABSTOP | WS_VISIBLE
+           CONTROL "OK", DID_OK, 158, 24, 38, 12, WC_BUTTON, BS_PUSHBUTTON |
+                BS_DEFAULT | WS_TABSTOP | WS_VISIBLE
+           CONTROL "Cancel", DID_CANCEL, 158, 8, 38, 12, WC_BUTTON, BS_PUSHBUTTON |
+                WS_TABSTOP | WS_VISIBLE
+         END
+     END
+
+
+// String Constants
+// ----------------
+   STRINGTABLE
+     {ERROR_DESKTOP_NO_MENU,         "MDI Desktop must have a menu."
+      ERROR_DESKTOP_NO_DELTA,        "MDI Desktop menu must have %s entry."
+      ERROR_DESKTOP_NO_EXIT,         "MDI Desktop menu must have %s entry."
+      ERROR_DOCUMENT_NO_SYSMENU,     "MDI Document must have a system menu."
+      ERROR_DOCUMENT_PARENT_INVALID, "MDI Document parent must be an MDI Desktop."
+      STRING_MORE_DOCUMENTS,         "~More Documents..."
+     }
+

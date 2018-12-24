@@ -1,0 +1,73 @@
+// Accelerator Tables
+// ------------------
+   #define ACCEL_DESKTOP                  256
+   #define ACCEL_DOCUMENT                 257
+
+
+// Menus and Menu Items
+// --------------------
+   #define MENU_CHILD_SYSMENU            2048
+   #define MENU_MAXCHILD_SYSMENU         2049
+   #define MENU_WINDOW                   2050
+
+
+// Commands
+// --------
+   #define CMD_DESKTOP_BASE             32000
+   #define CMD_DESKTOP_SIZE             32000
+   #define CMD_DESKTOP_MOVE             32001
+   #define CMD_DESKTOP_MINIMIZE         32002
+   #define CMD_DESKTOP_MAXIMIZE         32003
+   #define CMD_DESKTOP_CLOSE            32004
+   #define CMD_DESKTOP_NEXT             32005
+   #define CMD_DESKTOP_APPMENU          32006
+   #define CMD_DESKTOP_SYSMENU          32007
+   #define CMD_DESKTOP_RESTORE          32008
+   #define CMD_DESKTOP_MAX              32008
+
+   #define CMD_DOCUMENT_BASE            32010
+   #define CMD_DOCUMENT_SIZE            32010
+   #define CMD_DOCUMENT_MOVE            32011
+   #define CMD_DOCUMENT_MINIMIZE        32012
+   #define CMD_DOCUMENT_MAXIMIZE        32013
+   #define CMD_DOCUMENT_CLOSE           32014
+   #define CMD_DOCUMENT_NEXT            32015
+   #define CMD_DOCUMENT_APPMENU         32016
+   #define CMD_DOCUMENT_SYSMENU         32017
+   #define CMD_DOCUMENT_RESTORE         32018
+   #define CMD_DOCUMENT_MAX             32018
+
+   #define CMD_WINDOW                   32020
+   #define CMD_ARRANGE_TILED            32021
+   #define CMD_ARRANGE_CASCADED         32022
+   #define CMD_SEPERATOR_1              32023
+   #define CMD_TILE_ALWAYS              32024
+   #define CMD_CASCADE_ALWAYS           32025
+   #define CMD_SEPERATOR_2              32026
+   #define CMD_HIDE                     32027
+   #define CMD_UNHIDE                   32028
+   #define CMD_SEPERATOR_3              32029
+   #define CMD_NEW_DOCUMENT             32030
+   #define CMD_WINDOW_MAX               32030
+   #define CMD_MORE_DOCUMENTS           32031
+   #define CMD_SELECT_DOCUMENT          32100
+
+
+// Strings
+// -------
+   #define ERROR_DESKTOP_NO_MENU         1024
+   #define ERROR_DESKTOP_NO_DELTA        1025
+   #define ERROR_DESKTOP_NO_EXIT         1026
+   #define ERROR_DOCUMENT_NO_SYSMENU     1027
+   #define ERROR_DOCUMENT_PARENT_INVALID 1028
+   #define STRING_MORE_DOCUMENTS         1029
+
+
+// Dialog Boxes and Dialog Items
+// -----------------------------
+   #define DIALOG_UNHIDE                 4096
+   #define DIALOG_UNHIDE_LISTBOX         4097
+
+   #define DIALOG_MORE                   4098
+   #define DIALOG_MORE_LISTBOX           4099
+

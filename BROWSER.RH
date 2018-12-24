@@ -1,0 +1,28 @@
+// Resources
+// ---------
+   #define BROWSER_RESOURCES              256
+   #define DOCUMENT_RESOURCES             257
+
+
+// Commands
+// --------
+   #define CMD_FILE                       512
+   #define CMD_OPEN                       513
+   #define CMD_ABOUT                      514
+   #define CMD_EXIT                       515
+   #define CMD_CONTINUE                   516
+
+
+// Dialog Boxes and Dialog Items
+// -----------------------------
+   #define DIALOG_ABOUT                  1024
+
+
+// String Constants
+// ----------------
+   #define STRING_OPENTITLE              2048
+   #define STRING_OPENHELP               2049
+   #define STRING_TOOLARGE               2050
+   #define STRING_BADREAD                2051
+   #define STRING_TOOMANY                2052
+

@@ -1,0 +1,58 @@
+San Francisco Canyon Comapny
+220 Montgomery Street, Suite 1063
+San Francisco, CA 94104
+
+(415) 398-9957  -  FAX 398-5998
+
+Compuserve 72371,104
+
+Mark Florence, President
+
+
+
+MDI-13.ARC
+----------
+MDI-13.ARC contains these enhancements:
+
+1. MDI now issues MDI_INHIBIT_CLOSE_DESKTOP and MDI_INHIBIT_CLOSE_INSTANCE
+   WM_CONTROL messages whenever the desktop or document instance respectively
+   is about to be closed. You can use this opportunity to issue a "do you
+   want to save" message to the user, if appropriate. Your desktop or document
+   window procedure can return TRUE to inhibit the close (for example, if the
+   user replies "cancel", or NULL to allow the close. This way, existing programs
+   continue to work unchanged.
+
+These bugs are fixed in MDI-13.ARC:
+
+1. The desktop frame was not handling focus changes properly when
+   document windows themselves contained controls that manipulated
+   the focus. Basically, MDI now handles the WM_ACTIVATE message
+   rather than WM_SETFOCUS.
+
+2. In a rather stupid error, some functions that are EXPORTed in MDI.DEF
+   were not defined as EXPENTRY. This resulted in errors being flagged
+   under the Microsoft OS/2 1.2 debugging kernel. When MDI is compiled
+   under MSC 6.0, this error caused the entire DLL to fail.
+
+3. Under MSC 6.0, DATA MULTIPLE is required in the .DEF file if you
+   use a C run-time DLL. Because MDI was written this way, the appropriate
+   .DEF files have been changed.
+
+4. MSC 6.0 generates a lot more warnings than MSC 5.1 with the same /W3
+   compiler option. The MDI source has been updated to eliminate all warnings.
+
+5. A bug existed such that when a desktop containing a maximized document
+   was itself maximized, the document was re-sized incorrectly.
+
+6. Previously, when the desktop was re-sized, documents were positioned
+   relative to their bottom-left corner (the natural PM way of doing things).
+   MDI now repositions documents relative to their top-left corner, much
+   like Excel. This seems to be a much more user-friendly technique.
+
+In this version of MDI (MDI-13.ARC), I have removed all the executables
+and changed the compile instructions in READ.ME to be more generic,
+as different user's environments have varied so widely.
+Because MSC 5.1 and 6.0 behave differently, the CRTLIB.DLL and associated
+object files are no longer distributed. In any case, all this makes for a
+faster download!
+

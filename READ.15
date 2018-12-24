@@ -1,0 +1,179 @@
+San Francisco Canyon Comapny
+220 Montgomery Street, Suite 1063
+San Francisco, CA 94104
+
+(415) 398-9957  -  FAX 398-5998
+
+Compuserve 72371,104
+
+Mark Florence, President
+
+----------------------------------------------------------------------------
+ALERT! ALERT! ALERT! ALERT! ALERT! ALERT! ALERT! ALERT! ALERT! ALERT! ALERT!
+
+Bowing to considerable pressure, the API to MDI has changed slightly in this
+release. Unfortunately, this means that any existing programs must be changed
+(albeit slightly) and recompiled. The notes below highlight the areas of change.
+
+Remember, you too can have the complete MDI documentation in Quickhelp format
+simply by sending $25 to the above address! You'll also become a registered
+user and receive periodic updates.
+----------------------------------------------------------------------------
+
+
+
+MDI-15.ARC API Changes
+----------------------
+
+MDICreateDesktop
+
+The format of the MDICreateDesktop call has changed. The new format is as
+follows. Note that the ninth and last parameters are new (marked ***).
+
+   HWND EXPENTRY MDICreateDesktop  (PFNWP, ULONG, PCHAR, HMODULE, USHORT, PHWND, USHORT, USHORT, PCHAR, PCHAR, PCHAR, ULONG);
+
+   // PFNWP   : your desktop window procedure
+   // ULONG   : FCF_* flags for the desktop frame
+   // PCHAR   : initial desktop title text
+   // HMODULE : module handle for resources (or NULL if in .EXE)
+   // USHORT  : id of resources
+   // PHWND   : pointer to area in which handle to desktop client is returned
+   // USHORT  : size of re-entrant desktop data
+   // USHORT  : id of desktop frame
+***// PCHAR   : text of menu entry before which document menu deltas are inserted
+   // PCHAR   : text of menu entry before which the "window" menu entry is inserted
+   // PCHAR   : desired text of "window" menu entry
+***// ULONG   : mask of options
+
+Prior to this change, document menu deltas were inserted before the "window"
+menu entry. However, this made it difficult to support a CUA-style menu
+such as:
+
+   File Edit Options Window Help
+
+where "Edit" is a document menu delta. The new ninth parameter allows you
+to explictly state the desktop menu item (in this case, "Options") before
+which the document menu deltas are to be inserted.
+
+An example of the new MDICreateDesktop call is:
+
+   MDICreateDesktop (DesktopWndProc, flCreateFlags, "MDI Test Program",
+     (HMODULE) NULL, IDR_DESKTOP, &hwndDesktop, 0, 1, "Options", "Exit", "~Window", 0L);
+
+
+MDI_REQUEST_EXTENDED_OPTIONS
+
+The MDI_REQUEST_EXTENDED_OPTIONS message has been removed. Instead, these
+options are now specified directly in the MDICreateDesktop call as the last
+parameter. In addition, the option masks have been extended to 32-bits for
+added flexibility. For completeness, all of the available options are listed
+below. Those marked *** are new in this release.
+
+MDI_DISABLE_DESKTOP_POSITION  The retention of desktop position and
+                              size information on OS2.INI is
+                              disabled.
+
+MDI_DISABLE_DOCUMENT_POSITION The retention of document position and
+                              size information on OS2.INI is
+                              disabled.
+
+MDI_DISABLE_NEW_DOCUMENT      The "New Document" window menu entry
+                              is disabled.
+
+MDI_INITIAL_CASCADE_ALWAYS    The desktop is created in the "cascade
+                              always" state
+
+MDI_INITIAL_MAX_DESKTOP       The desktop is created maximized
+
+MDI_INITIAL_TILE_ALWAYS       The desktop is created in the "tile
+                              always" state
+
+MDI_KEEP_SCROLLBARS           Any vertical or horizointal scroll bars
+                              in document windows are \bnot
+                              removed when the document becomes
+                              inactive.
+
+MDI_KEEP_WINDOWS_MENU         The "windows" menu is not removed from
+                              the desktop menu bar when there are no
+                              document windows. In other words, the
+                              "windows" menu is always present.
+
+***MDI_ALWAYS_ON_RESIZE       performs a "tile always" or a "cascade always"
+                              operation each time the desktop is resized,
+                              as well as when a document is created or destroyed.
+
+***MDI_DISABLE_NEW_DOCUMENT   prevents the "new document" entry from
+                              appearing in the Window menu.
+
+***MDI_DISABLE_DESKTOP_POSITION disables the memory of desktop position
+                              between executions
+
+***MDI_DISABLE_DOCUMENT_POSITION disables the memory of document positions
+                              between executions
+
+Note: MDI normally maintains the last known position of the desktop
+and its documents on OS2.INI. When the desktop or a document is created,
+its last known position and size is used.
+
+An example of the new MDICreateDesktop call is:
+
+   ULONG flOptions = (MDI_KEEP_WINDOWS_MENU | MDI_INITIAL_MAX_DESKTOP | MDI_INITIAL_TILE_ALWAYS
+                        | MDI_DISABLE_DESKTOP_POSITION | MDI_ALWAYS_ON_RESIZE | MDI_DISABLE_DOCUMENT_POSITION);
+
+   MDICreateDesktop (DesktopWndProc, flCreateFlags, "MDI Test Program",
+     (HMODULE) NULL, IDR_DESKTOP, &hwndDesktop, 0, 1, "Options", "Exit", "~Window", flOptions);
+
+
+MDICreateDocument
+
+The format of the MDICreateDocument call has changed. The new format is as
+follows. Note that the last parameter is new (marked ***).
+
+   HWND EXPENTRY MDICreateDocument (PFNWP, HWND, ULONG, PCHAR, HMODULE, USHORT, PHWND, USHORT, USHORT, USHORT);
+
+   // PFNWP   : your document window procedure
+   // HWND    : handle to the desktop client window, as returned by MDICreateDesktop
+   // ULONG   : FCF_* flags for the document frame
+   // PCHAR   : initial document title
+   // HMODULE : module handle for resources (or NULL if in .EXE)
+   // USHORT  : id of resources
+   // PHWND   : pointer to area in which handle to document client is returned
+   // USHORT  : size of re-entrant document data
+   // USHORT  : size of re-entrant document instance data
+***// USHORT  : id of document frame
+
+In the last parameter, you are expected to code the id of the document frame.
+It can be useful to explicitly state the id for help procesing, for example.
+Previously, MDI assigned an arbitrary id that you could not change.
+
+An example of the new MDICreateDocument call is:
+
+   MDICreateDocument (WhiteWndProc, hwndDesktop, flCreateFlags,
+     "White", (HMODULE) NULL, IDR_WHITE, &hwndDocument, 0, 0, 100);
+
+
+Windows Menu
+
+Although this is not strictly an API change, an important user interface
+change has been made to the "windows" menu. Now, if more than nine document
+windows are active, the first nine plus "more..." are listed in the "windows"
+menu. Selecting "more..." causes a dialog box showing a list box of all
+documents to be displayed. This change has been made to comply with CUA.
+
+
+
+
+
+MDI-15.ARC Bug Fixes
+--------------------
+
+1. "Tile Always" with at least one maximized window leaves a hole in its
+   tiling algorithm.
+
+2. The ALT and F10 keys operate inconsistently with respect to highlighting
+   the desktop menu
+
+3. MDI causes the desktop window menu bar to flicker excessively when
+   inserting a new set of document window menu deltas (as when a new
+   document becomes the active window)
+

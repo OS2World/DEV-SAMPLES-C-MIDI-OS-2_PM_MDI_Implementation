@@ -1,0 +1,25 @@
+San Francisco Canyon Comapny
+220 Montgomery Street, Suite 1063
+San Francisco, CA 94123
+
+(415) 398-9957  -  FAX 398-5998
+
+Compuserve 72371,104
+
+Mark Florence, President
+
+
+
+MDI-11.ARC
+----------
+These bugs have been fixed in MDI-11.ARC:
+
+1. When a document is minimized, a cascade or tile request causes
+   areas of "blackness" to be displayed. The problem lies in the
+   fact that (under 1.2) there are two windows associated with
+   each icon: the icon itself, and its title window.
+
+2. The MDI_NOTIFY_DESTROY_* messages have been expanded. See MDI.H.
+   If you use these messages, you should recompile any files that are
+   dependant on MDI.H.
+

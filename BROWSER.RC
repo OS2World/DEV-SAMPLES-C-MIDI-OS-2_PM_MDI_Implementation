@@ -1,0 +1,74 @@
+// Includes
+// --------
+   #define INCL_WIN
+
+   #include <os2.h>
+   #include "Browser.RH"
+
+// Icons
+// -----
+   POINTER BROWSER_RESOURCES  Browser.ICO
+   POINTER DOCUMENT_RESOURCES Document.ICO
+
+// Menu
+// ----
+   MENU BROWSER_RESOURCES
+    {SUBMENU "~File",                CMD_FILE
+      {MENUITEM "~Open...\tCtrl+O",  CMD_OPEN
+       MENUITEM SEPARATOR
+       MENUITEM "~About...",         CMD_ABOUT
+      }
+     SUBMENU "E~xit",                CMD_EXIT
+      {MENUITEM "~Exit\tF3",         SC_CLOSE,    MIS_SYSCOMMAND
+       MENUITEM "~Continue",         CMD_CONTINUE
+      }
+     MENUITEM "Help",                WM_HELP,     MIS_HELP
+    }
+
+// Accelerators
+// ------------
+   ACCELTABLE BROWSER_RESOURCES
+    {VK_F1, WM_HELP,  VIRTUALKEY
+     VK_F3, SC_CLOSE, VIRTUALKEY
+     "^O",  CMD_OPEN
+    }
+
+// About Dialog Box
+// ----------------
+   DLGTEMPLATE DIALOG_ABOUT LOADONCALL MOVEABLE DISCARDABLE
+     BEGIN
+       DIALOG "About Browser", DIALOG_ABOUT, 263, 144, 192, 65, FS_NOBYTEALIGN |
+                FS_DLGBORDER | WS_VISIBLE | WS_CLIPSIBLINGS | WS_SAVEBITS,
+                FCF_TITLEBAR
+         BEGIN
+           CONTROL "OK", DID_OK, 147, 49, 40, 12, WC_BUTTON, BS_PUSHBUTTON |
+                BS_DEFAULT | WS_GROUP | WS_TABSTOP | WS_VISIBLE
+           CONTROL "", -1, 142, 0, 2, 65, WC_STATIC, SS_FGNDRECT | WS_VISIBLE
+           CONTROL "Browser V1.00", -1, 4, 53, 134, 8, WC_STATIC, SS_TEXT |
+                DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL "Written by Mark Florence", -1, 4, 44, 134, 8, WC_STATIC,
+                SS_TEXT | DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL "Copyright ¸ 1990", -1, 4, 31, 134, 8, WC_STATIC, SS_TEXT |
+                DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL "The San Francisco Canyon Co, Inc.", -1, 4, 22, 134, 8, WC_STATIC,
+                SS_TEXT | DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL "2237 Union Street", -1, 4, 13, 134, 8, WC_STATIC,
+                SS_TEXT | DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL "San Francisco, CA 94123", -1, 4, 4, 134, 8, WC_STATIC,
+                SS_TEXT | DT_LEFT | DT_VCENTER | WS_VISIBLE
+           CONTROL BROWSER_RESOURCES, -1, 157, 10, 22, 16, WC_STATIC, SS_ICON | WS_GROUP |
+                WS_VISIBLE
+         END
+     END
+
+
+// String Constants
+// ----------------
+   STRINGTABLE
+     {STRING_OPENTITLE, "Open File"
+      STRING_OPENHELP,  "Enter the name of the file you wish to browse."
+      STRING_TOOLARGE,  "%s size of %ld is bigger than the maximum of %ld."
+      STRING_BADREAD,   "%s cannot be read."
+      STRING_TOOMANY,   "%s line count of %ld is bigger than the maximum of %ld."
+     }
+
